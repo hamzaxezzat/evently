@@ -1,0 +1,110 @@
+/* SessionsTable.module.scss */
+
+.sessionsTable {
+  table {
+    width: 80%;
+    margin: auto;
+    border-collapse: collapse;
+    td:nth-child(4),
+    td:nth-child(5),
+    td:nth-child(6) {
+      text-align: center;
+    }
+    tbody td:first-child {
+      text-align: left;
+      font-size: 14px;
+      color: var(--gray-200);
+    }
+    th:first-child,
+    td:first-child {
+      width: 40%;
+
+      // text-align: left;
+    }
+    th,
+    td {
+      padding: 15px;
+      border-bottom: 1px solid var(--gray-600);
+      color: var(--gray-400);
+      font-size: 12px;
+      text-align: center;
+      background-color: var(--gray-700);
+    }
+
+    th {
+      background-color: #2e2e2e;
+      position: relative;
+      cursor: pointer;
+
+      span {
+        position: absolute;
+        margin-left: 5px;
+        top: 55%;
+        transform: translateY(-50%);
+      }
+    }
+
+    tbody {
+      tr {
+        transition: background-color 0.3s ease;
+
+        td {
+          text-align: left;
+          span {
+            display: block;
+          }
+        }
+
+        &:hover {
+          background-color: #3c3c3c;
+        }
+      }
+    }
+    tfoot td {
+      border-bottom: none;
+      text-align: left;
+      background: var(
+        --Primaries-Primary-700,
+        linear-gradient(
+          0deg,
+          rgba(26, 26, 26, 0.4) 0%,
+          rgba(26, 26, 26, 0.4) 100%
+        ),
+        #2d2d2d
+      );
+    }
+  }
+}
+.pagination {
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+
+  text-align: left !important;
+  // margin: 5px;
+
+  /* Shadow/xs */
+  box-shadow: 0px 1px 2px 0px rgba(16, 24, 40, 0.05);
+  button {
+    border: 1px solid var(--Primaries-Primary-600, #404040);
+    padding: 10px 15px;
+
+    background: var(--Gray-Gray-900, #252525);
+    color: #fff;
+  }
+}
+.tableCell {
+}
+tr {
+}
+
+.icon {
+  width: 20px;
+  height: 20px;
+  color: var(--gray-400);
+  margin-right: 5px;
+  padding-top: px;
+}
+.iconLarge {
+  font-size: 20px;
+}
