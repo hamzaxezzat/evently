@@ -42,7 +42,7 @@ const NewSessions = ({ toggleSessions }) => {
     event_id: '',
   });
 
-  // ==================== Handel Change ====================
+  // ==================== Handel Change ===================
 
   const handleChange = (e, time) => {
     const { name, value, type, files } = e.target;
