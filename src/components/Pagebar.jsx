@@ -35,11 +35,3 @@ function Pagebar({ sectionName }) {
 }
 
 export default Pagebar;
-
-// {
-//   sectionName !== 'All Sessions' && (
-//     <span className={styles.return}>
-//       <FaLessThan /> {sectionName}
-//     </span>
-//   );
-// }

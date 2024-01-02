@@ -1,36 +1,9 @@
-// import React from 'react';
-// import styles from './Sidebar.module.scss';
-// import { RiHomeLine } from 'react-icons/ri';
-// import { MdEditCalendar } from 'react-icons/md';
-
-// function Sidebar() {
-//   return (
-//     <div className={styles.sidebar}>
-//       <nav className={styles.top}>
-//         <ul>
-//           <li>
-//             <RiHomeLine />
-//             <p>Home</p>
-//           </li>
-
-//           <li>
-//             <MdEditCalendar />
-//             <p>Planning</p>
-//           </li>
-//         </ul>
-//       </nav>
-//       <div className={styles.botton}>aa</div>
-//     </div>
-//   );
-// }
-// export default Sidebar;
-
 import React, { useState } from 'react';
 import { RiArrowDownSLine, RiArrowRightSLine } from 'react-icons/ri'; // Import icons
 import { RiHomeLine, RiUser3Line, RiSettings3Line } from 'react-icons/ri';
 import { MdEditCalendar } from 'react-icons/md';
 
-import styles from './Sidebar.module.scss'; // Import SCSS file for styling
+import styles from './Sidebar.module.scss';
 
 const Sidebar = () => {
   const [openSections, setOpenSections] = useState({

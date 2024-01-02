@@ -1,0 +1,198 @@
+// ============== Pagebar
+.pagebar {
+  position: fixed;
+  display: flex;
+  top: 62px;
+  left: 208px;
+  right: 0;
+  height: 68px;
+  padding: 5px 26px;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #2e2e2e69;
+  /* From https://css.glass */
+  background: rgba(0, 0, 0, 0.21);
+
+  box-shadow: 0 4px 30px rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(5.8px);
+  -webkit-backdrop-filter: blur(5.8px);
+  border: 1px solid rgba(0, 0, 0, 0.1);
+
+  .sectionName {
+    .return {
+      color: var(--Dashboard-Dark-Copy-Darkets, #9a9a9a);
+      align-items: center;
+      gap: 5px;
+      font-size: 14px;
+      cursor: pointer;
+    }
+    p {
+      font-weight: 800;
+      margin-left: 10px;
+    }
+  }
+  .CTA {
+    display: flex;
+
+    text-align: center;
+    cursor: pointer;
+    .btn {
+      width: 100px;
+      background: var(--gray-50, #fff);
+      transition-duration: 0.4s;
+      cursor: pointer;
+    }
+    .btn:hover {
+      opacity: 0.75;
+    }
+    .btnDark {
+      width: 100px;
+      padding: 10px 16px;
+      border: 1px solid var(--Dashboard-Dark-Components-Lighter, #404040);
+    }
+  }
+}
+
+// =========== =========== Pageeeee=========== ===========
+.newSession {
+  display: flex;
+  width: 780px;
+  margin: auto;
+  padding: 40px 40px 60px 40px;
+  background: var(--Gray-Gray-800, #2e2e2e);
+  margin-top: 150px;
+  form {
+    display: grid;
+    gap: 20px;
+  }
+  .control {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    .field {
+      p {
+        color: var(--Gray-Gray-200, #bababa);
+        font-family: Roboto;
+        font-weight: 700;
+      }
+    }
+    select {
+      all: unset;
+      display: grid;
+      place-items: center;
+    }
+    input,
+    select,
+    textarea,
+    .userSelected {
+      color: var(--gray-100, #fff);
+      font-size: 16px;
+      width: 500px;
+      height: 50px;
+      border: 1px solid var(--gray-500, #757575);
+      background-color: unset;
+      padding-left: 20px;
+    }
+    textarea {
+      padding: 10px;
+      height: unset;
+    }
+
+    .userSelected {
+      border: 1px solid var(--gray-500, #535353);
+      background: var(--gray-750, #353535) !important;
+      display: flex;
+      place-items: center;
+      gap: 5px;
+      img {
+        width: 35px;
+        height: 35px;
+        border: 1px solid var(--gray-100);
+        border-radius: 50%;
+        margin-right: 10px;
+      }
+    }
+  }
+
+  hr {
+    margin: 20px 0px 20px 0px;
+    width: 100%;
+  }
+
+  .flexRow {
+    display: flex;
+  }
+
+  .input50,
+  .input25 {
+    color: var(--gray-100, #fff);
+    font-size: 16px;
+    display: flex;
+    place-items: center;
+    padding-left: 20px;
+    gap: 5px;
+    height: 50px;
+    border: 1px solid var(--gray-500, #757575);
+    select,
+    text,
+    input {
+      all: unset;
+    }
+    p {
+      display: block !important;
+    }
+  }
+}
+
+.customFileUpload {
+  display: grid;
+  place-content: center;
+  border: 1px dashed var(--gray-500);
+  border-radius: 5px;
+  height: 200px;
+  align-self: stretch;
+  cursor: pointer;
+  text-align: center;
+
+  .uploadIcon {
+    font-size: 30px;
+    color: var(--primary-50);
+    border-radius: 50px;
+    background: rgba(255, 255, 255, 0.05);
+    width: 65px;
+    height: 65px;
+    display: grid;
+    place-items: center;
+    margin: auto;
+  }
+  b {
+    color: var(--primary-50);
+  }
+  img {
+    margin-top: 5px;
+    width: 700px;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 5px;
+  }
+}
+
+.customFileUpload input {
+  display: none;
+}
+
+.customFileUpload span {
+  display: block;
+  font-size: 18px;
+  color: #888;
+}
+
+.field,
+.control {
+  display: flex;
+
+  .icon {
+    max-width: 5%;
+    display: inline;
+  }
+}

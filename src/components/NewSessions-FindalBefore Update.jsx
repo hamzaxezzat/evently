@@ -9,10 +9,6 @@ import 'react-datepicker/dist/react-datepicker.css';
 
 const NewSessions = ({ toggleSessions }) => {
   const formRef = useRef(null);
-  const [formArrayData, setFormArrayData] = useState({
-    speaker_ids: [],
-    moderator_ids: [],
-  });
 
   // ==================== DAte ====================
 
@@ -48,52 +44,48 @@ const NewSessions = ({ toggleSessions }) => {
   // ==================== Handel Change ===================
 
   const handleChange = (e, time) => {
-    const { name, value } = e.target;
+    const { name, value, type, files } = e.target;
 
-    // Recieve Array
-    setFormArrayData((prevData) => ({
-      ...prevData,
-      [name]: [...prevData[name], value],
-    }));
-    console.log('formArrayData', formArrayData);
-    // setSelectedUser(usersData.find((user) => user.id == formData.speaker_ids));
-    // setSelectedModerator(
-    //   usersData.find((user) => user.id == formData.moderator_ids)
-    // );
+    setSelectedUser(usersData.find((user) => user.id == formData.speaker_ids));
+    setSelectedModerator(
+      usersData.find((user) => user.id == formData.moderator_ids)
+    );
 
-    // // Array
-    // if (name === 'speaker_ids' || name === 'moderator_ids') {
-    //   // If handling speaker_ids or moderator_ids
-    //   const idsArray = Array.isArray(value) ? value : [value]; // Ensure it's an array
-    //   setFormData((prevData) => ({
-    //     ...prevData,
-    //     [name]: idsArray,
-    //   }));
+    // Array
+    if (name === 'speaker_ids' || name === 'moderator_ids') {
+      // If handling speaker_ids or moderator_ids
+      const idsArray = Array.isArray(value) ? value : [value]; // Ensure it's an array
+      setFormData((prevData) => ({
+        ...prevData,
+        [name]: idsArray,
+      }));
 
-    //   // Handle file uploads (thumbnail)
-    // } else if (type === 'file' && files && files.length > 0) {
-    //   const file = files[0]; // Assuming you are dealing with the first file selected
-    //   setFormData((prevData) => ({
-    //     ...prevData,
-    //     [name]: file instanceof Blob ? file : null, // Ensure it's a Blob or File object
-    //   }));
-    //   // Handle time changes
-    // } else if (time) {
-    //   const hours = time.getHours().toString().padStart(2, '0');
-    //   const minutes = time.getMinutes().toString().padStart(2, '0');
-    //   const formattedTime = `${hours}:${minutes}`;
-    //   setFormData((prevData) => ({
-    //     ...prevData,
-    //     [name]: formattedTime,
-    //   }));
-    //   // Handle other inputs
-    // } else {
-    //   setFormData((prevData) => ({
-    //     ...prevData,
-    //     [name]: type === 'file' ? files[0] : value, // Update state with file or value
-    //   }));
+      // Handle file uploads (thumbnail)
+    } else if (type === 'file' && files && files.length > 0) {
+      const file = files[0]; // Assuming you are dealing with the first file selected
+      setFormData((prevData) => ({
+        ...prevData,
+        [name]: file instanceof Blob ? file : null, // Ensure it's a Blob or File object
+      }));
+      // Handle time changes
+    } else if (time) {
+      const hours = time.getHours().toString().padStart(2, '0');
+      const minutes = time.getMinutes().toString().padStart(2, '0');
+      const formattedTime = `${hours}:${minutes}`;
+      setFormData((prevData) => ({
+        ...prevData,
+        [name]: formattedTime,
+      }));
+      // Handle other inputs
+    } else {
+      setFormData((prevData) => ({
+        ...prevData,
+        [name]: type === 'file' ? files[0] : value, // Update state with file or value
+      }));
+    }
     console.log(formData);
   };
+
   // ==================== API Users Data ====================
   const [usersData, setUsersData] = useState([]);
 
@@ -119,50 +111,29 @@ const NewSessions = ({ toggleSessions }) => {
   }, []);
   const venues = ['Venue A', 'Venue B'];
 
-  function handleSubmit(e) {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    var fd = new FormData(document.getElementById('form'));
-    // const acquisitionChannel = fd.getAll('acquisition');
-    const data = Object.fromEntries(fd.entries());
+    try {
+      const response = await axios.post(
+        'https://qa-testing-backend-293b1363694d.herokuapp.com/api/v3/create-sessions',
+        formData,
+        {
+          headers: {
+            Authorization:
+              'Bearer eyJhbGciOiJSUzI1NiJ9.eyJpZCI6MzAzLCJ0eXBlIjoidXNlciIsInJhbiI6IkJORU5WSVBOTlFUWVBMS0tVQ0JWIiwic3RhdHVzIjoxfQ.YGV-jGKZj1Lp4SqlM3aiF6Aov6YVF6lZRMpKvx_Zdrpjj4C1zE-JSTKtjVboQ9de58TUViyVOc4JwiktjF_4yxnYzIrw449s584j2GiqUpxfp6OPmfAj8BAbfN_M4RoU5PXEjhcNVh5uNRtxtvxZtpECrl72_22T4he3LbqISMNHzVh5eprIKIFLt_pM7cyRKt3Njf8I89CLnq5nUpiDHnMMForamKq9jubmiYPOHpFvijEE3-jusRk0F1T32zMY_0AELXnpqhbbx6HtmMdxBahnrUNyznacdVwaSrNus8vX01N8zEcfRvkRzYuqjnZXr9jrm2iriHq80iicUG99GQ',
+            'Content-Type': 'application/json',
+          },
+        }
+      );
 
-    // Convert specific fields to arrays
-    // const speakerIds = data.speaker_ids ? data.speaker_ids.split(',') : [];
-    // // const speakerIds = data.speaker_ids ? data.speaker_ids.split(',') : [];
-    // const moderatorIds = data.moderator_ids
-    //   ? data.moderator_ids.split(',')
-    //   : [];
+      console.log('Form data sent:', response.data);
 
-    // Replace the original string fields with the arrays in the data object
-    const updatedData = {
-      ...data,
-      speaker_ids: formArrayData.speaker_ids,
-      moderator_ids: formArrayData.moderator_ids,
-    };
-    // data acquisition = acquisitionChannel;
-    console.log('data', data);
-    console.log('UpdatedData', updatedData);
-
-    // try {
-    //   const response = await axios.post(
-    //     'https://qa-testing-backend-293b1363694d.herokuapp.com/api/v3/create-sessions',
-    //     formData,
-    //     {
-    //       headers: {
-    //         Authorization:
-    //           'Bearer eyJhbGciOiJSUzI1NiJ9.eyJpZCI6MzAzLCJ0eXBlIjoidXNlciIsInJhbiI6IkJORU5WSVBOTlFUWVBMS0tVQ0JWIiwic3RhdHVzIjoxfQ.YGV-jGKZj1Lp4SqlM3aiF6Aov6YVF6lZRMpKvx_Zdrpjj4C1zE-JSTKtjVboQ9de58TUViyVOc4JwiktjF_4yxnYzIrw449s584j2GiqUpxfp6OPmfAj8BAbfN_M4RoU5PXEjhcNVh5uNRtxtvxZtpECrl72_22T4he3LbqISMNHzVh5eprIKIFLt_pM7cyRKt3Njf8I89CLnq5nUpiDHnMMForamKq9jubmiYPOHpFvijEE3-jusRk0F1T32zMY_0AELXnpqhbbx6HtmMdxBahnrUNyznacdVwaSrNus8vX01N8zEcfRvkRzYuqjnZXr9jrm2iriHq80iicUG99GQ',
-    //         'Content-Type': 'application/json',
-    //       },
-    //     }
-    //   );
-
-    //   console.log('Form data sent:', response.data);
-
-    //   setFormData(initialFormData);
-    // } catch (error) {
-    //   console.error('Error posting form data:', error);
-    //   // Handle error if the POST request fails
-    // }
-  }
+      setFormData(initialFormData);
+    } catch (error) {
+      console.error('Error posting form data:', error);
+      // Handle error if the POST request fails
+    }
+  };
 
   return (
     <>
@@ -193,16 +164,16 @@ const NewSessions = ({ toggleSessions }) => {
       {/* ================ End Page Navbar ================ */}
       {/* ================ Start Form Content =============== */}
       <div className={styles.newSession}>
-        <form onSubmit={handleSubmit} ref={formRef} id="form">
+        <form onSubmit={handleSubmit} ref={formRef}>
           <label className={styles.field} htmlFor="title">
             <p htmlFor="title">
               Session Title:<span>*</span>
             </p>
-
             <input
               type="text"
               name="title"
-              id="title"
+              value={formData.sessionTitle}
+              onChange={handleChange}
               placeholder="Start Typing..."
             />
           </label>
@@ -210,7 +181,13 @@ const NewSessions = ({ toggleSessions }) => {
             <p>
               Session Subtitle:<span>*</span>
             </p>
-            <input type="text" name="subtitle" placeholder="Start Typing..." />
+            <input
+              type="text"
+              name="subtitle"
+              value={formData.sessionSubtitle}
+              onChange={handleChange}
+              placeholder="Start Typing..."
+            />
           </label>
           <label className={styles.customFileUpload}>
             <input
@@ -243,9 +220,9 @@ const NewSessions = ({ toggleSessions }) => {
               <DatePicker
                 // showTimeSelectOnly
                 selected={formData.date}
-                // onChange={(time) =>
-                //   setFormData((prevData) => ({ ...prevData, date: time }))
-                // }
+                onChange={(time) =>
+                  setFormData((prevData) => ({ ...prevData, date: time }))
+                }
                 name="date"
                 className={styles.timePicker}
               />
@@ -256,9 +233,9 @@ const NewSessions = ({ toggleSessions }) => {
                 showTimeSelect
                 showTimeSelectOnly
                 selected={formData.from}
-                // onChange={(time) =>
-                //   setFormData((prevData) => ({ ...prevData, from: time }))
-                // }
+                onChange={(time) =>
+                  setFormData((prevData) => ({ ...prevData, from: time }))
+                }
                 name="from"
                 className={styles.timePicker}
                 dateFormat="HH:mm" // Display format in the DatePicker component
@@ -270,9 +247,9 @@ const NewSessions = ({ toggleSessions }) => {
                 showTimeSelect
                 showTimeSelectOnly
                 selected={formData.till}
-                // onChange={(time) =>
-                //   setFormData((prevData) => ({ ...prevData, till: time }))
-                // }
+                onChange={(time) =>
+                  setFormData((prevData) => ({ ...prevData, till: time }))
+                }
                 name="till"
                 className={styles.timePicker}
                 dateFormat="HH:mm" // Display format in the DatePicker component
@@ -287,6 +264,8 @@ const NewSessions = ({ toggleSessions }) => {
             <textarea
               type="text"
               name="description"
+              value={formData.sessionTitle}
+              onChange={handleChange}
               placeholder="Type details"
               rows="4"
               colu="true"
@@ -296,8 +275,17 @@ const NewSessions = ({ toggleSessions }) => {
             <p>
               Speaker<span>*</span>
             </p>
-            <select name="speaker_ids" onChange={handleChange}>
-              <option className={styles.placeholder} disabled hidden>
+            <select
+              name="speaker_ids"
+              value={formData.speaker_ids}
+              onChange={handleChange}
+            >
+              <option
+                className={styles.placeholder}
+                value="" // Ensure the default value matches an existing option value
+                disabled
+                hidden
+              >
                 Select
               </option>
               {usersData.map((user) => (
@@ -326,34 +314,16 @@ const NewSessions = ({ toggleSessions }) => {
           )}
 
           {/* <br /> */}
-          {/* <label className={styles.field}>
-            <p>
-              Moderator<span>*</span>
-            </p>
-
-            <select name="moderator_ids">
-              <option
-                className={styles.placeholder}
-                value=""
-                disabled
-                selected
-                hidden
-              >
-                Select
-              </option>
-              {usersData.map((user, index) => (
-                <option key={index} value={user.id}>
-                  {user.first_name}
-                </option>
-              ))}
-            </select>
-          </label> */}
           <label className={styles.field}>
             <p>
               Moderator<span>*</span>
             </p>
 
-            <select name="moderator_ids" onChange={handleChange}>
+            <select
+              name="moderator_ids"
+              value={formData.moderator_ids}
+              onChange={handleChange}
+            >
               <option
                 className={styles.placeholder}
                 value=""
@@ -393,7 +363,7 @@ const NewSessions = ({ toggleSessions }) => {
               Venue<span>*</span>
             </p>
 
-            <select placeholder="select" name="venue">
+            <select placeholder="select" name="" onChange={handleChange}>
               <option
                 className={styles.placeholder}
                 value=""
@@ -417,6 +387,8 @@ const NewSessions = ({ toggleSessions }) => {
             <input
               type="text"
               name="event_id"
+              value={formData.event_id}
+              onChange={handleChange}
               placeholder="Enter event_id..."
             />
           </label>

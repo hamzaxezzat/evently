@@ -14,7 +14,7 @@ const SessionsTable = () => {
   const token =
     'eyJhbGciOiJSUzI1NiJ9.eyJpZCI6MzAzLCJ0eXBlIjoidXNlciIsInJhbiI6IkJORU5WSVBOTlFUWVBMS0tVQ0JWIiwic3RhdHVzIjoxfQ.YGV-jGKZj1Lp4SqlM3aiF6Aov6YVF6lZRMpKvx_Zdrpjj4C1zE-JSTKtjVboQ9de58TUViyVOc4JwiktjF_4yxnYzIrw449s584j2GiqUpxfp6OPmfAj8BAbfN_M4RoU5PXEjhcNVh5uNRtxtvxZtpECrl72_22T4he3LbqISMNHzVh5eprIKIFLt_pM7cyRKt3Njf8I89CLnq5nUpiDHnMMForamKq9jubmiYPOHpFvijEE3-jusRk0F1T32zMY_0AELXnpqhbbx6HtmMdxBahnrUNyznacdVwaSrNus8vX01N8zEcfRvkRzYuqjnZXr9jrm2iriHq80iicUG99GQ'; // Replace with your Bearer token
   const link =
-    'https://qa-testing-backend-293b1363694d.herokuapp.com/api/v3/get-sessions?event_id=19'; // Replace with your API link
+    'https://qa-testing-backend-293b1363694d.herokuapp.com/api/v3/get-sessions?event_id=19';
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -25,11 +25,10 @@ const SessionsTable = () => {
         });
         console.log('API Response:', response.data);
 
-        // setData( response.data);
         if (response.data && Array.isArray(response.data.sessions)) {
           setData(response.data.sessions);
         } else {
-          setData([]); // Set an empty array as a fallback
+          setData([]);
         }
       } catch (error) {
         console.error('Error fetching data:', error);
@@ -37,7 +36,7 @@ const SessionsTable = () => {
     };
 
     fetchData();
-  }, []); // Empty dependency array to run once on mount
+  }, []);
 
   const columns = React.useMemo(
     () => [
@@ -73,7 +72,7 @@ const SessionsTable = () => {
     getTableBodyProps,
     headerGroups,
     prepareRow,
-    page, // Instead of rows, use page from usePagination hook
+    page,
     footerGroups,
     state: { pageIndex, pageSize, pageCount, pageOptions }, // Pagination state
     gotoPage,
